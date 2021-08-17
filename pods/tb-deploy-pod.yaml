@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tb-deploy
+spec:
+  containers:
+    - name: main
+      image: dockerregistry.reisendeninfo.aws.db.de:5000/de.db.ri.sherlock/tb-k8s-deploy:3.3.18
+      imagePullPolicy: Never

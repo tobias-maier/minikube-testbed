@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubia-dep
+  labels:
+    version: v4
+spec:
+  replicas: 5
+  minReadySeconds: 20
+  revisionHistoryLimit: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+
+  selector:
+    matchLabels:
+      app: kubia-app
+  template:
+    metadata:
+      name: kubia
+      labels:
+        app: kubia-app
+        version: v4
+    spec:
+      containers:
+        - image: luksa/kubia:v4
+          name: nodejs

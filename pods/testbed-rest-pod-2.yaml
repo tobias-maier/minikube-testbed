@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: testbed-rest-2
+  labels:
+    app: rest-api-app
+    version: "0.3"
+    creation-method: manual
+    tier: frontend
+spec:
+  nodeSelector:
+    master: "true"
+  containers:
+    - name: main
+      image: testbed-rest-api:0.3
+      ports:
+        - containerPort: 8080
+          protocol: TCP
+      env:
+        - name: version
+          value: "0.3"
+    - name: sidecar
+      image: rest-api-sidecar:0.2
+  restartPolicy: OnFailure
+  hostname: testbxed-dev-io
+  activeDeadlineSeconds: 1200
+  shareProcessNamespace: true

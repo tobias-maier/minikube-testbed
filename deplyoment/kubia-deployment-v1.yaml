@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubia-dep
+  labels:
+    version: v1
+spec:
+  replicas: 3
+  minReadySeconds: 20
+  selector:
+    matchLabels:
+      app: kubia-app
+  template:
+    metadata:
+      name: kubia
+      labels:
+        app: kubia-app
+        version: v1
+    spec:
+      containers:
+        - image: luksa/kubia:v1
+          name: nodejs
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kubia
+spec:
+  type: ClusterIP
+  selector:
+    app: kubia-app
+  ports:
+    - port: 80
+      targetPort: 8080
